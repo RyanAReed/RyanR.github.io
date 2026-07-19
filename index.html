@@ -1,13 +1,162 @@
 <!doctype html>
-<html>
+<html lang="en">
   <head>
-    <title>Ryan's Dumpster Rentals</title>
+    <meta charset="UTF-8" />
+    <title>Important Question ❤️</title>
+
+    <style>
+      body {
+        margin: 0;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+        font-family: Arial, sans-serif;
+        overflow: hidden;
+      }
+
+      .card {
+        background: white;
+        padding: 40px;
+        border-radius: 25px;
+        text-align: center;
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+        max-width: 450px;
+        position: relative;
+      }
+
+      h1 {
+        color: #e91e63;
+        font-size: 38px;
+      }
+
+      p {
+        font-size: 20px;
+        color: #555;
+      }
+
+      .buttons {
+        margin-top: 30px;
+      }
+
+      button {
+        font-size: 22px;
+        padding: 15px 35px;
+        border-radius: 50px;
+        border: none;
+        cursor: pointer;
+        margin: 10px;
+        transition: 0.2s;
+      }
+
+      #yes {
+        background: #4caf50;
+        color: white;
+      }
+
+      #yes:hover {
+        transform: scale(1.1);
+      }
+
+      #no {
+        background: #f44336;
+        color: white;
+        position: absolute;
+      }
+
+      .hidden {
+        display: none;
+      }
+
+      #loveMessage {
+        font-size: 28px;
+        color: #e91e63;
+        margin-top: 20px;
+      }
+
+      .heart {
+        position: absolute;
+        color: rgba(255, 255, 255, 0.7);
+        font-size: 25px;
+        animation: float 8s linear infinite;
+      }
+
+      @keyframes float {
+        from {
+          transform: translateY(100vh);
+        }
+        to {
+          transform: translateY(-10vh);
+        }
+      }
+    </style>
   </head>
+
   <body>
-    <h1>Ryan's Dumpster Rentals</h1>
+    <div class="card">
+      <h1>❤️ Important Question ❤️</h1>
 
-    <p>Affordable residential dumpster rentals.</p>
+      <p>
+        After all these years...
+        <br /><br />
+        Do you still love me?
+        <br />
+        (Choose carefully 😘)
+      </p>
 
-    <button onclick="window.location = 'tel:5015551234'">Call Now</button>
+      <div class="buttons">
+        <button id="yes">YES ❤️</button>
+        <button id="no">NO 😈</button>
+      </div>
+
+      <div id="loveMessage" class="hidden">
+        I knew it! ❤️🥰
+        <br /><br />
+        You're stuck with me forever! 😁
+      </div>
+    </div>
+
+    <script>
+      const noButton = document.getElementById("no");
+      const yesButton = document.getElementById("yes");
+      const message = document.getElementById("loveMessage");
+
+      function moveNoButton() {
+        const x = Math.random() * (window.innerWidth - 120);
+        const y = Math.random() * (window.innerHeight - 60);
+
+        noButton.style.left = x + "px";
+        noButton.style.top = y + "px";
+      }
+
+      noButton.addEventListener("mouseover", moveNoButton);
+
+      noButton.addEventListener("click", moveNoButton);
+
+      yesButton.addEventListener("click", function () {
+        document.querySelector(".buttons").style.display = "none";
+
+        message.classList.remove("hidden");
+      });
+
+      function createHeart() {
+        const heart = document.createElement("div");
+
+        heart.className = "heart";
+        heart.innerHTML = "❤️";
+
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.animationDuration = 5 + Math.random() * 5 + "s";
+
+        document.body.appendChild(heart);
+
+        setTimeout(() => {
+          heart.remove();
+        }, 8000);
+      }
+
+      setInterval(createHeart, 500);
+    </script>
   </body>
 </html>
