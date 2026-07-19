@@ -217,8 +217,10 @@
         }
 
         moveNo();
-        if (attempts === 1) {
+        if (attempts > 1) {
           noButton.innerHTML = "NO 😈";
+        } else {
+          noButton.innerHTML = "NO";
         }
       }
 
