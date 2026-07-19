@@ -2,9 +2,15 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <title>10 Years ❤️</title>
 
     <style>
+      * {
+        box-sizing: border-box;
+      }
+
       body {
         margin: 0;
         height: 100vh;
@@ -18,62 +24,61 @@
 
       .card {
         background: white;
-        padding: 40px;
+        width: 90%;
+        max-width: 450px;
+        padding: 30px 20px;
         border-radius: 25px;
         text-align: center;
         box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
-        width: 420px;
-        position: relative;
       }
 
       h1 {
         color: #e91e63;
-        font-size: 38px;
+        font-size: 36px;
+        margin-top: 0;
       }
 
       p {
         font-size: 20px;
+        line-height: 1.5;
         color: #555;
       }
 
       #buttonArea {
-        height: 100px;
+        height: 150px;
         position: relative;
         margin-top: 25px;
       }
 
       button {
         font-size: 22px;
-        padding: 15px 35px;
-        border-radius: 50px;
+        padding: 15px 25px;
         border: none;
+        border-radius: 50px;
         cursor: pointer;
+        touch-action: none;
       }
 
       #yes {
         background: #4caf50;
         color: white;
         position: absolute;
-        left: 60px;
-        top: 25px;
-      }
-
-      #yes:hover {
-        transform: scale(1.1);
+        left: 15%;
+        top: 50px;
       }
 
       #no {
         background: #f44336;
         color: white;
         position: absolute;
-        left: 230px;
-        top: 25px;
+        left: 55%;
+        top: 50px;
       }
 
       #loveMessage {
-        font-size: 26px;
         color: #e91e63;
-        margin-top: 20px;
+        font-size: 24px;
+        line-height: 1.5;
       }
 
       .hidden {
@@ -91,8 +96,24 @@
         from {
           transform: translateY(100vh);
         }
+
         to {
           transform: translateY(-10vh);
+        }
+      }
+
+      @media (max-width: 400px) {
+        h1 {
+          font-size: 30px;
+        }
+
+        p {
+          font-size: 18px;
+        }
+
+        button {
+          font-size: 20px;
+          padding: 14px 20px;
         }
       }
     </style>
@@ -105,11 +126,15 @@
       <p>
         Happy 10th Anniversary!
         <br /><br />
+
         After 10 amazing years together...
-        <br />
-        Do you still love me?
         <br /><br />
-        (There is only one correct answer 😘)
+
+        Do you still love me?
+
+        <br /><br />
+
+        (Choose wisely 😘)
       </p>
 
       <div id="buttonArea">
@@ -120,9 +145,11 @@
 
       <div id="loveMessage" class="hidden">
         🥰 I knew it! ❤️
+
         <br /><br />
 
         10 years later and you're still my favorite person.
+
         <br /><br />
 
         Looks like you're stuck with me forever! 😁❤️
@@ -149,32 +176,39 @@
         noButton.style.left = x + "px";
         noButton.style.top = y + "px";
 
-        if (attempts > 5) {
-          noButton.innerHTML = "Nice try 😂";
+        if (attempts === 5) {
+          noButton.innerHTML = "Still trying? 😂";
         }
 
-        if (attempts > 10) {
-          noButton.innerHTML = "You know YES is easier ❤️";
+        if (attempts === 10) {
+          noButton.innerHTML = "Just press YES ❤️";
         }
       }
 
       noButton.addEventListener("mouseover", moveNo);
 
+      // Mobile touch support
+      noButton.addEventListener("touchstart", function (e) {
+        e.preventDefault();
+        moveNo();
+      });
+
       noButton.addEventListener("click", moveNo);
 
-      yesButton.addEventListener("click", () => {
-        document.getElementById("buttonArea").style.display = "none";
+      yesButton.addEventListener("click", function () {
+        area.style.display = "none";
 
         message.classList.remove("hidden");
       });
 
       function createHeart() {
-        let heart = document.createElement("div");
+        const heart = document.createElement("div");
 
         heart.className = "heart";
         heart.innerHTML = "❤️";
 
         heart.style.left = Math.random() * 100 + "vw";
+
         heart.style.animationDuration = 5 + Math.random() * 5 + "s";
 
         document.body.appendChild(heart);
