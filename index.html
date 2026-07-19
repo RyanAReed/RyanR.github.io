@@ -166,6 +166,29 @@
 
       let attempts = 0;
 
+      function updateNoButtonLabel() {
+        if (attempts === 3) {
+          noButton.innerHTML = "Really? 😂";
+          return;
+        }
+
+        if (attempts === 6) {
+          noButton.innerHTML = "Try again ❤️";
+          return;
+        }
+
+        if (attempts === 10) {
+          noButton.innerHTML = "You know the answer 😘";
+          return;
+        }
+
+        if (attempts > 1) {
+          noButton.innerHTML = "NO 😈";
+        } else {
+          noButton.innerHTML = "NO";
+        }
+      }
+
       function moveNo() {
         attempts++;
 
@@ -190,17 +213,7 @@
         noButton.style.left = x + "px";
         noButton.style.top = y + "px";
 
-        if (attempts === 3) {
-          noButton.innerHTML = "Really? 😂";
-        }
-
-        if (attempts === 6) {
-          noButton.innerHTML = "Try again ❤️";
-        }
-
-        if (attempts === 10) {
-          noButton.innerHTML = "You know the answer 😘";
-        }
+        updateNoButtonLabel();
       }
 
       function handleNoButtonEvent(event) {
@@ -208,11 +221,6 @@
         event.stopPropagation();
 
         moveNo();
-        if (attempts > 1) {
-          noButton.innerHTML = "NO 😈";
-        } else {
-          noButton.innerHTML = "NO";
-        }
       }
 
       noButton.addEventListener("click", function (event) {
