@@ -1,224 +1,91 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<script>
+  const noButton = document.getElementById("no");
+  const yesButton = document.getElementById("yes");
+  const area = document.getElementById("buttonArea");
+  const message = document.getElementById("loveMessage");
 
-    <title>10 Years ❤️</title>
+  let attempts = 0;
 
-    <style>
-      * {
-        box-sizing: border-box;
-      }
+  function moveNo() {
+    attempts++;
 
-      body {
-        margin: 0;
-        height: 100vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background: linear-gradient(135deg, #ff9a9e, #fad0c4);
-        font-family: Arial, sans-serif;
-        overflow: hidden;
-      }
+    const areaWidth = area.clientWidth;
+    const areaHeight = area.clientHeight;
 
-      .card {
-        background: white;
-        width: 90%;
-        max-width: 450px;
-        padding: 30px 20px;
-        border-radius: 25px;
-        text-align: center;
-        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
-      }
+    const buttonWidth = noButton.offsetWidth;
+    const buttonHeight = noButton.offsetHeight;
 
-      h1 {
-        color: #e91e63;
-        font-size: 36px;
-        margin-top: 0;
-      }
+    let x;
+    let y;
+    let tooClose = true;
 
-      p {
-        font-size: 20px;
-        line-height: 1.5;
-        color: #555;
-      }
+    // Keep trying until the NO button is away from YES
+    while (tooClose) {
+      x = Math.random() * (areaWidth - buttonWidth);
+      y = Math.random() * (areaHeight - buttonHeight);
 
-      #buttonArea {
-        height: 150px;
-        position: relative;
-        margin-top: 25px;
-      }
+      const noLeft = x;
+      const noRight = x + buttonWidth;
+      const noTop = y;
+      const noBottom = y + buttonHeight;
 
-      button {
-        font-size: 22px;
-        padding: 15px 25px;
-        border: none;
-        border-radius: 50px;
-        cursor: pointer;
-        touch-action: none;
-      }
+      const yesLeft = yesButton.offsetLeft;
+      const yesRight = yesLeft + yesButton.offsetWidth;
+      const yesTop = yesButton.offsetTop;
+      const yesBottom = yesTop + yesButton.offsetHeight;
 
-      #yes {
-        background: #4caf50;
-        color: white;
-        position: absolute;
-        left: 15%;
-        top: 50px;
-      }
+      // Add extra safety space around YES button
+      const padding = 40;
 
-      #no {
-        background: #f44336;
-        color: white;
-        position: absolute;
-        left: 55%;
-        top: 50px;
-      }
+      tooClose =
+        noRight > yesLeft - padding &&
+        noLeft < yesRight + padding &&
+        noBottom > yesTop - padding &&
+        noTop < yesBottom + padding;
+    }
 
-      #loveMessage {
-        color: #e91e63;
-        font-size: 24px;
-        line-height: 1.5;
-      }
+    noButton.style.left = x + "px";
+    noButton.style.top = y + "px";
 
-      .hidden {
-        display: none;
-      }
+    if (attempts === 5) {
+      noButton.innerHTML = "Nice try 😂";
+    }
 
-      .heart {
-        position: absolute;
-        color: white;
-        font-size: 25px;
-        animation: float 8s linear infinite;
-      }
+    if (attempts === 10) {
+      noButton.innerHTML = "YES is easier ❤️";
+    }
+  }
 
-      @keyframes float {
-        from {
-          transform: translateY(100vh);
-        }
+  noButton.addEventListener("mouseover", moveNo);
 
-        to {
-          transform: translateY(-10vh);
-        }
-      }
+  noButton.addEventListener("touchstart", function (e) {
+    e.preventDefault();
+    moveNo();
+  });
 
-      @media (max-width: 400px) {
-        h1 {
-          font-size: 30px;
-        }
+  noButton.addEventListener("click", moveNo);
 
-        p {
-          font-size: 18px;
-        }
+  yesButton.addEventListener("click", function () {
+    area.style.display = "none";
 
-        button {
-          font-size: 20px;
-          padding: 14px 20px;
-        }
-      }
-    </style>
-  </head>
+    message.classList.remove("hidden");
+  });
 
-  <body>
-    <div class="card">
-      <h1>❤️ 10 Years ❤️</h1>
+  function createHeart() {
+    const heart = document.createElement("div");
 
-      <p>
-        Happy 10th Anniversary!
-        <br /><br />
+    heart.className = "heart";
+    heart.innerHTML = "❤️";
 
-        After 10 amazing years together...
-        <br /><br />
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.animationDuration = 5 + Math.random() * 5 + "s";
 
-        Do you still love me?
+    document.body.appendChild(heart);
 
-        <br /><br />
+    setTimeout(() => {
+      heart.remove();
+    }, 8000);
+  }
 
-        (Choose wisely 😘)
-      </p>
-
-      <div id="buttonArea">
-        <button id="yes">YES ❤️</button>
-
-        <button id="no">NO 😈</button>
-      </div>
-
-      <div id="loveMessage" class="hidden">
-        🥰 I knew it! ❤️
-
-        <br /><br />
-
-        10 years later and you're still my favorite person.
-
-        <br /><br />
-
-        Looks like you're stuck with me forever! 😁❤️
-      </div>
-    </div>
-
-    <script>
-      const noButton = document.getElementById("no");
-      const yesButton = document.getElementById("yes");
-      const area = document.getElementById("buttonArea");
-      const message = document.getElementById("loveMessage");
-
-      let attempts = 0;
-
-      function moveNo() {
-        attempts++;
-
-        const maxX = area.clientWidth - noButton.offsetWidth;
-        const maxY = area.clientHeight - noButton.offsetHeight;
-
-        const x = Math.random() * maxX;
-        const y = Math.random() * maxY;
-
-        noButton.style.left = x + "px";
-        noButton.style.top = y + "px";
-
-        if (attempts === 5) {
-          noButton.innerHTML = "Still trying? 😂";
-        }
-
-        if (attempts === 10) {
-          noButton.innerHTML = "Just press YES ❤️";
-        }
-      }
-
-      noButton.addEventListener("mouseover", moveNo);
-
-      // Mobile touch support
-      noButton.addEventListener("touchstart", function (e) {
-        e.preventDefault();
-        moveNo();
-      });
-
-      noButton.addEventListener("click", moveNo);
-
-      yesButton.addEventListener("click", function () {
-        area.style.display = "none";
-
-        message.classList.remove("hidden");
-      });
-
-      function createHeart() {
-        const heart = document.createElement("div");
-
-        heart.className = "heart";
-        heart.innerHTML = "❤️";
-
-        heart.style.left = Math.random() * 100 + "vw";
-
-        heart.style.animationDuration = 5 + Math.random() * 5 + "s";
-
-        document.body.appendChild(heart);
-
-        setTimeout(() => {
-          heart.remove();
-        }, 8000);
-      }
-
-      setInterval(createHeart, 500);
-    </script>
-  </body>
-</html>
+  setInterval(createHeart, 500);
+</script>
