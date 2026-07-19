@@ -56,7 +56,9 @@
         border: none;
         border-radius: 50px;
         cursor: pointer;
-        touch-action: none;
+        touch-action: manipulation;
+        -webkit-tap-highlight-color: transparent;
+        user-select: none;
       }
 
       #yes {
@@ -165,7 +167,7 @@
       const message = document.getElementById("loveMessage");
 
       let attempts = 0;
-      let touchHandled = false;
+      let ignoreNextClick = false;
 
       function updateNoButtonLabel() {
         if (attempts === 3) {
@@ -211,36 +213,25 @@
       }
 
       function handleNoButtonEvent(event) {
+        if (event.type === "click" && ignoreNextClick) {
+          ignoreNextClick = false;
+          return;
+        }
+
         event.preventDefault();
         event.stopPropagation();
 
-        if (event.type === "touchstart") {
-          if (touchHandled) {
-            return;
-          }
-          touchHandled = true;
+        if (event.type === "touchend") {
+          ignoreNextClick = true;
         }
 
         moveNo();
       }
 
-      noButton.addEventListener("click", function (event) {
-        event.preventDefault();
-        event.stopPropagation();
+      noButton.addEventListener("click", handleNoButtonEvent);
+      noButton.addEventListener("touchend", handleNoButtonEvent, {
+        passive: false,
       });
-
-      noButton.addEventListener("touchend", function () {
-        touchHandled = false;
-      });
-
-      if (window.PointerEvent) {
-        noButton.addEventListener("pointerdown", handleNoButtonEvent);
-      } else {
-        noButton.addEventListener("mousedown", handleNoButtonEvent);
-        noButton.addEventListener("touchstart", handleNoButtonEvent, {
-          passive: false,
-        });
-      }
 
       yesButton.addEventListener("click", function () {
         document.getElementById("buttonArea").style.display = "none";
