@@ -81,21 +81,6 @@
         line-height: 1.5;
       }
 
-      #devil {
-        font-size: 60px;
-        margin-top: 10px;
-        opacity: 0;
-        transform: scale(0.8);
-        transition:
-          opacity 0.3s ease,
-          transform 0.3s ease;
-      }
-
-      #devil.visible {
-        opacity: 1;
-        transform: scale(1);
-      }
-
       .hidden {
         display: none;
       }
@@ -171,8 +156,6 @@
 
         Looks like you're stuck with me forever! 😁❤️
       </div>
-
-      <div id="devil" class="hidden">😈</div>
     </div>
 
     <script>
@@ -234,7 +217,6 @@
         }
 
         moveNo();
-        showDevil();
       }
 
       // ONLY CLICK MOVES NO
@@ -245,22 +227,11 @@
         passive: false,
       });
 
-      const devil = document.getElementById("devil");
-      let devilShown = false;
-
       yesButton.addEventListener("click", function () {
         document.getElementById("buttonArea").style.display = "none";
 
         message.classList.remove("hidden");
       });
-
-      function showDevil() {
-        if (devilShown) return;
-
-        devilShown = true;
-        devil.classList.remove("hidden");
-        devil.classList.add("visible");
-      }
 
       function createHeart() {
         const heart = document.createElement("div");
