@@ -165,28 +165,25 @@
       const message = document.getElementById("loveMessage");
 
       let attempts = 0;
+      let touchHandled = false;
 
       function updateNoButtonLabel() {
         if (attempts === 3) {
-          noButton.innerHTML = "Really? 😂";
+          noButton.textContent = "Really? 😂";
           return;
         }
 
         if (attempts === 6) {
-          noButton.innerHTML = "Try again ❤️";
+          noButton.textContent = "Try again ❤️";
           return;
         }
 
         if (attempts === 10) {
-          noButton.innerHTML = "You know the answer 😘";
+          noButton.textContent = "You know the answer 😘";
           return;
         }
 
-        if (attempts > 1) {
-          noButton.innerHTML = "NO 😈";
-        } else {
-          noButton.innerHTML = "NO";
-        }
+        noButton.textContent = attempts > 1 ? "NO 😈" : "NO";
       }
 
       function moveNo() {
@@ -197,9 +194,6 @@
 
         const noWidth = noButton.offsetWidth;
         const noHeight = noButton.offsetHeight;
-
-        // Keep NO only on the right side
-        // YES is always safe
 
         const minX = areaWidth * 0.55;
         const maxX = areaWidth - noWidth - 10;
@@ -220,12 +214,23 @@
         event.preventDefault();
         event.stopPropagation();
 
+        if (event.type === "touchstart") {
+          if (touchHandled) {
+            return;
+          }
+          touchHandled = true;
+        }
+
         moveNo();
       }
 
       noButton.addEventListener("click", function (event) {
         event.preventDefault();
         event.stopPropagation();
+      });
+
+      noButton.addEventListener("touchend", function () {
+        touchHandled = false;
       });
 
       if (window.PointerEvent) {
