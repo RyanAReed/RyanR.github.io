@@ -248,3 +248,253 @@
     </script>
   </body>
 </html>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>10 Years ❤️</title>
+
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+        font-family: Arial, sans-serif;
+        overflow: hidden;
+      }
+
+      .card {
+        background: white;
+        width: 90%;
+        max-width: 450px;
+        padding: 30px 20px;
+        border-radius: 25px;
+        text-align: center;
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+      }
+
+      h1 {
+        color: #e91e63;
+        font-size: 36px;
+        margin-bottom: 10px;
+      }
+
+      p {
+        font-size: 20px;
+        line-height: 1.5;
+        color: #555;
+      }
+
+      #buttonArea {
+        height: 220px;
+        position: relative;
+        margin-top: 20px;
+      }
+
+      button {
+        font-size: 22px;
+        padding: 15px 25px;
+        border: none;
+        border-radius: 50px;
+        cursor: pointer;
+        touch-action: none;
+      }
+
+      #yes {
+        background: #4caf50;
+        color: white;
+        position: absolute;
+        left: 8%;
+        top: 80px;
+      }
+
+      #no {
+        background: #f44336;
+        color: white;
+        position: absolute;
+        left: 60%;
+        top: 80px;
+      }
+
+      #loveMessage {
+        color: #e91e63;
+        font-size: 24px;
+        line-height: 1.5;
+      }
+
+      .hidden {
+        display: none;
+      }
+
+      .heart {
+        position: absolute;
+        color: white;
+        font-size: 25px;
+        animation: float 8s linear infinite;
+      }
+
+      @keyframes float {
+        from {
+          transform: translateY(100vh);
+        }
+
+        to {
+          transform: translateY(-10vh);
+        }
+      }
+
+      @media (max-width: 400px) {
+        h1 {
+          font-size: 30px;
+        }
+
+        p {
+          font-size: 18px;
+        }
+
+        button {
+          font-size: 20px;
+          padding: 14px 20px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="card">
+      <h1>❤️ 10 Years ❤️</h1>
+
+      <p>
+        Happy 10th Anniversary!
+
+        <br /><br />
+
+        After 10 amazing years together...
+
+        <br /><br />
+
+        Do you still love me?
+
+        <br /><br />
+
+        (Choose carefully 😘)
+      </p>
+
+      <div id="buttonArea">
+        <button id="yes">YES ❤️</button>
+
+        <button id="no">NO 😈</button>
+      </div>
+
+      <div id="loveMessage" class="hidden">
+        🥰 I knew it! ❤️
+
+        <br /><br />
+
+        10 years later and you're still my favorite person.
+
+        <br /><br />
+
+        Looks like you're stuck with me forever! 😁❤️
+      </div>
+    </div>
+
+    <script>
+      const noButton = document.getElementById("no");
+      const yesButton = document.getElementById("yes");
+      const area = document.getElementById("buttonArea");
+      const message = document.getElementById("loveMessage");
+
+      let attempts = 0;
+
+      function moveNo() {
+        attempts++;
+
+        const areaWidth = area.clientWidth;
+        const areaHeight = area.clientHeight;
+
+        const noWidth = noButton.offsetWidth;
+        const noHeight = noButton.offsetHeight;
+
+        // NO only moves in the right side.
+        // YES is always protected.
+
+        const minX = areaWidth * 0.55;
+        const maxX = areaWidth - noWidth - 10;
+
+        const minY = 10;
+        const maxY = areaHeight - noHeight - 10;
+
+        const x = minX + Math.random() * (maxX - minX);
+
+        const y = minY + Math.random() * (maxY - minY);
+
+        noButton.style.left = x + "px";
+        noButton.style.top = y + "px";
+
+        if (attempts === 3) {
+          noButton.innerHTML = "Really? 😂";
+        }
+
+        if (attempts === 6) {
+          noButton.innerHTML = "Wrong answer ❤️";
+        }
+
+        if (attempts === 10) {
+          noButton.innerHTML = "Just say YES 😘";
+        }
+      }
+
+      // Clicking NO makes it escape
+
+      noButton.addEventListener("click", function (e) {
+        e.preventDefault();
+
+        moveNo();
+      });
+
+      // Phone tapping support
+
+      noButton.addEventListener("touchend", function (e) {
+        e.preventDefault();
+
+        moveNo();
+      });
+
+      yesButton.addEventListener("click", function () {
+        document.getElementById("buttonArea").style.display = "none";
+
+        message.classList.remove("hidden");
+      });
+
+      function createHeart() {
+        const heart = document.createElement("div");
+
+        heart.className = "heart";
+
+        heart.innerHTML = "❤️";
+
+        heart.style.left = Math.random() * 100 + "vw";
+
+        heart.style.animationDuration = 5 + Math.random() * 5 + "s";
+
+        document.body.appendChild(heart);
+
+        setTimeout(() => {
+          heart.remove();
+        }, 8000);
+      }
+
+      setInterval(createHeart, 500);
+    </script>
+  </body>
+</html>
