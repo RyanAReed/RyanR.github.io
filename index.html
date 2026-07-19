@@ -164,6 +164,7 @@
       const message = document.getElementById("loveMessage");
 
       let attempts = 0;
+      let ignoreNextClick = false;
 
       function moveNo() {
         attempts++;
@@ -202,19 +203,26 @@
         }
       }
 
-      // ONLY CLICK MOVES NO
-      noButton.addEventListener("click", function (event) {
+      function handleNoButtonEvent(event) {
         event.preventDefault();
 
+        if (event.type === "click" && ignoreNextClick) {
+          ignoreNextClick = false;
+          return;
+        }
+
+        if (event.type === "touchend") {
+          ignoreNextClick = true;
+        }
+
         moveNo();
-      });
+      }
+
+      // ONLY CLICK MOVES NO
+      noButton.addEventListener("click", handleNoButtonEvent);
 
       // Mobile tap support
-      noButton.addEventListener("touchend", function (event) {
-        event.preventDefault();
-
-        moveNo();
-      });
+      noButton.addEventListener("touchend", handleNoButtonEvent, { passive: false });
 
       yesButton.addEventListener("click", function () {
         document.getElementById("buttonArea").style.display = "none";
